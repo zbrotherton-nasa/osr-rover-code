@@ -22,6 +22,8 @@ RUN apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 # Source ROS on terminal start
 RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+# Add code to image
+ADD . /osr-code
 
 ENV SHELL=/bin/bash
 ENV ROS_DOMAIN_ID=0
