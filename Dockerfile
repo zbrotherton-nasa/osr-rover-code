@@ -26,6 +26,6 @@ RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 ADD . /osr-code
 
 ENV SHELL=/bin/bash
-ENV ROS_DOMAIN_ID=0
+ENV ROS_DOMAIN_ID=42
 
 CMD [ "bash" ]
