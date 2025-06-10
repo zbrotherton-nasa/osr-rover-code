@@ -15,4 +15,15 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y python3-pip
-ENV SHELL /bin/bash
+# Install demo packages
+RUN apt-get install -y \
+      ros-${ROS_DISTRO}-demo-nodes-cpp \
+      ros-${ROS_DISTRO}-demo-nodes-py && \
+    rm -rf /var/lib/apt/lists/*
+# Source ROS on terminal start
+RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+
+ENV SHELL=/bin/bash
+ENV ROS_DOMAIN_ID=0
+
+CMD [ "bash" ]
