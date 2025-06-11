@@ -3,6 +3,10 @@ ARG USERNAME=USERNAME
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
+ENV ROS_DOMAIN_ID=42
+
+SHELL ["/bin/bash", "-c"]
+
 # Delete user if it exists in container (e.g Ubuntu Noble: ubuntu)
 RUN if id -u $USER_UID ; then userdel `id -un $USER_UID` ; fi
 
@@ -14,18 +18,25 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y python3-pip
+RUN apt-get install -y python3 python3-pip
 # Install demo packages
 RUN apt-get install -y \
       ros-${ROS_DISTRO}-demo-nodes-cpp \
       ros-${ROS_DISTRO}-demo-nodes-py && \
     rm -rf /var/lib/apt/lists/*
-# Source ROS on terminal start
-RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 # Add code to image
-ADD . /osr-code
-
-ENV SHELL=/bin/bash
-ENV ROS_DOMAIN_ID=42
+ADD . /osr-ws/src
+# Configure rosdep
+RUN apt-get update \
+    && rosdep update --rosdistro ${ROS_DISTRO} \
+    && rosdep install -y --from-paths /osr-ws --ignore-src --rosdistro=${ROS_DISTRO}
+# Install additional OSR dependencies and build
+RUN python3 -m pip install --break-system-packages adafruit-circuitpython-servokit ina260 RPi.GPIO smbus
+WORKDIR /osr-ws
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && colcon build --symlink-install
+WORKDIR /
+# Source ROS on terminal start
+RUN echo "source /osr-ws/install/setup.bash" >> ~/.bashrc
+RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
 
 CMD [ "bash" ]
