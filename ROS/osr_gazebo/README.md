@@ -17,20 +17,20 @@ The following ROS packages are included to visualize the rover in rviz and simul
 - **Gazebo Version**: 11.14.0
 
 ## ROS Package Installation
-Before installing the required packages, replace `${ros-distro}` in the commands below with the appropriate ROS distribution name (`iron`, `humble`).
+Before installing the required packages, replace `${ROS_DISTRO}` in the commands below with the appropriate ROS distribution name (`iron`, `humble`).
 
 ```bash
 sudo apt install python3-colcon-common-extensions
-sudo apt-get install ros-${ros-distro}-rviz2
-sudo apt-get install ros-${ros-distro}-controller-manager
-sudo apt-get install ros-${ros-distro}-robot-state-publisher
-sudo apt-get install ros-${ros-distro}-joint-state-publisher
-sudo apt-get install ros-${ros-distro}-joint-state-publisher-gui 
-sudo apt-get install ros-${ros-distro}-gazebo-ros-pkgs
-sudo apt-get install ros-${ros-distro}-trajectory-msgs
-sudo apt-get install ros-${ros-distro}-velocity-controllers
-sudo apt-get install ros-${ros-distro}-joint-trajectory-controller
-sudo apt-get install ros-${ros-distro}-gazebo-ros2-control-demos
+sudo apt-get install ros-${ROS_DISTRO}-rviz2
+sudo apt-get install ros-${ROS_DISTRO}-controller-manager
+sudo apt-get install ros-${ROS_DISTRO}-robot-state-publisher
+sudo apt-get install ros-${ROS_DISTRO}-joint-state-publisher
+sudo apt-get install ros-${ROS_DISTRO}-joint-state-publisher-gui 
+sudo apt-get install ros-${ROS_DISTRO}-gazebo-ros-pkgs
+sudo apt-get install ros-${ROS_DISTRO}-trajectory-msgs
+sudo apt-get install ros-${ROS_DISTRO}-velocity-controllers
+sudo apt-get install ros-${ROS_DISTRO}-joint-trajectory-controller
+sudo apt-get install ros-${ROS_DISTRO}-gazebo-ros2-control-demos
 ```
 
 ## Installation
@@ -38,7 +38,7 @@ sudo apt-get install ros-${ros-distro}-gazebo-ros2-control-demos
 ### Create and configure a workspace
 Source your ROS installation:
 ```bash
-source /opt/ros/${ros-distro}/setup.bash
+source /opt/ros/${ROS_DISTRO}/setup.bash
 ```
 build the osr-gazebo packages:
 ```bash
