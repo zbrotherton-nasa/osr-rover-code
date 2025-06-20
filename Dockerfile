@@ -24,6 +24,10 @@ RUN apt-get install -y \
       ros-${ROS_DISTRO}-demo-nodes-cpp \
       ros-${ROS_DISTRO}-demo-nodes-py && \
     rm -rf /var/lib/apt/lists/*
+# Prepare for x11 forwarding - verifiy necessary
+RUN apt-get update && \
+    apt-get install -y x11-apps
+ENV DISPLAY=:0
 # Set environment variables so gazebo can utilize discrete GPU
 ENV MESA_GL_VERSION_OVERRIDE=4.5
 ENV __NV_PRIME_RENDER_OFFLOAD=1
