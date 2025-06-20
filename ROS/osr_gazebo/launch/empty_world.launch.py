@@ -14,10 +14,13 @@ import xacro
 
 
 def generate_launch_description():
+    pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
+
+    gz_launch_path = os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
+
     gazebo = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory('gazebo_ros'), 'launch'), '/gazebo.launch.py']),
-             )
+            PythonLaunchDescriptionSource(gz_launch_path)
+        )
 
     osr_urdf_path = os.path.join(
         get_package_share_directory('osr_gazebo'))
@@ -43,7 +46,7 @@ def generate_launch_description():
         output='screen'
     )
     
-    spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
+    spawn_entity = Node(package='ros_gz_sim', executable='create',
                         arguments=['-topic', 'robot_description',
                                    '-entity', 'rover'],
                         output='screen')
