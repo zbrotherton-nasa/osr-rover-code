@@ -24,6 +24,10 @@ RUN apt-get install -y \
       ros-${ROS_DISTRO}-demo-nodes-cpp \
       ros-${ROS_DISTRO}-demo-nodes-py && \
     rm -rf /var/lib/apt/lists/*
+# Set environment variables so gazebo can utilize discrete GPU
+ENV MESA_GL_VERSION_OVERRIDE=4.5
+ENV __NV_PRIME_RENDER_OFFLOAD=1
+ENV __GLX_VENDOR_LIBRARY_NAME=nvidia
 # Add code to image
 ADD . /osr-ws/src
 # Configure rosdep
